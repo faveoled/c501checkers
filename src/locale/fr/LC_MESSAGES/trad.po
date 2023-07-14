@@ -1,0 +1,269 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: c501checkers\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-07-29 15:40+0100\n"
+"PO-Revision-Date: 2010-07-29 15:40+0100\n"
+"Last-Translator: Colin GILLE / congelli501 <colingille@hotmail.com>\n"
+"Language-Team: Colin GILLE / Congelli501 <colingille@hotmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-Language: French\n"
+"X-Poedit-Country: FRANCE\n"
+"X-Poedit-SearchPath-0: ../../..\n"
+
+#: ../../../findFile.cpp:54
+msgid "File not Found : "
+msgstr "Fichier non trouvé :"
+
+#: ../../../findFile.cpp:54
+msgid "Error"
+msgstr "Erreur"
+
+#: ../../../App.cpp:57
+#: ../../../MainPanel.cpp:134
+msgid "Error : "
+msgstr "Erreur :"
+
+#: ../../../App.cpp:57
+#: ../../../App.cpp:97
+#: ../../../MainPanel.cpp:134
+msgid "Error..."
+msgstr "Erreur..."
+
+#: ../../../App.cpp:90
+msgid "Unknown error as occured !"
+msgstr "Une erreur inconnue s'est produite !"
+
+#: ../../../App.cpp:97
+msgid "Fatal error : "
+msgstr "Erreur fatale :"
+
+#: ../../../SfmlBoard.cpp:181
+msgid "Whites won !"
+msgstr "Les Blancs ont gagné !"
+
+#: ../../../SfmlBoard.cpp:185
+msgid "Blacks won !"
+msgstr "Les Noirs ont gagné !"
+
+#: ../../../SfmlBoard.cpp:245
+msgid "Whites: "
+msgstr "Blancs : "
+
+#: ../../../SfmlBoard.cpp:246
+msgid "Blacks: "
+msgstr "Noirs : "
+
+#: ../../../MainFrame.cpp:57
+#: ../../../MainFrame.cpp:76
+msgid "New"
+msgstr "Nouveau"
+
+#: ../../../MainFrame.cpp:58
+#: ../../../MainFrame.cpp:77
+msgid "Play for me"
+msgstr "Jouer pour moi"
+
+#: ../../../MainFrame.cpp:66
+msgid "&File"
+msgstr "&Fichier"
+
+#: ../../../MainFrame.cpp:67
+msgid "&Edit"
+msgstr "&Édition"
+
+#: ../../../MainFrame.cpp:68
+msgid "&Help"
+msgstr "&Aide"
+
+#: ../../../DialogConfig.cpp:69
+msgid "International rules"
+msgstr "Règles internationales"
+
+#: ../../../DialogConfig.cpp:70
+msgid "English rules"
+msgstr "Règles anglaises"
+
+#: ../../../DialogConfig.cpp:74
+msgid "Rules:"
+msgstr "Règles :"
+
+#: ../../../DialogConfig.cpp:85
+msgid "Players"
+msgstr "Joueurs"
+
+#: ../../../DialogConfig.cpp:88
+msgid "Human"
+msgstr "Humain"
+
+#: ../../../DialogConfig.cpp:89
+msgid "c501 Checkers, level 1"
+msgstr "C501 Checkers, niveau 1"
+
+#: ../../../DialogConfig.cpp:90
+msgid "c501 Checkers, level 2"
+msgstr "C501 Checkers, niveau 2"
+
+#: ../../../DialogConfig.cpp:91
+msgid "c501 Checkers, level 3"
+msgstr "C501 Checkers, niveau 3"
+
+#: ../../../DialogConfig.cpp:92
+msgid "c501 Checkers, level 4"
+msgstr "C501 Checkers, niveau 4"
+
+#: ../../../DialogConfig.cpp:93
+msgid "c501 Checkers, level 5"
+msgstr "C501 Checkers, niveau 5"
+
+#: ../../../DialogConfig.cpp:98
+msgid "Whites:"
+msgstr "Blancs :"
+
+#: ../../../DialogConfig.cpp:108
+msgid "Blacks:"
+msgstr "Noirs :"
+
+#: ../../../DialogConfig.cpp:117
+msgid "Rules"
+msgstr "Règles"
+
+#: ../../../DialogConfig.cpp:122
+msgid "Board size:"
+msgstr "Taille du plateau :"
+
+#: ../../../DialogConfig.cpp:139
+msgid "Piece number:"
+msgstr "Nombre de pions :"
+
+#: ../../../DialogConfig.cpp:148
+msgid "Pieces can eat back"
+msgstr "Les pions peuvent manger en arrière"
+
+#: ../../../DialogConfig.cpp:154
+msgid "Slow queens"
+msgstr "Reines lentes"
+
+#: ../../../DialogConfig.cpp:159
+msgid "Whites start"
+msgstr "Les Blancs commencent"
+
+#: ../../../DialogAbout.cpp:46
+#, c-format
+msgid "Version %s"
+msgstr "Version %s"
+
+#: ../../../DialogAbout.cpp:55
+msgid "Developer"
+msgstr "Développeur"
+
+#: ../../../DialogAbout.cpp:58
+#, c-format
+msgid ""
+"%s is free software: you can redistribute it and/or modifyit under the terms of the GNU General Public License as published bythe Free Software Foundation, either version 3 of the License, or(at your option) any later version.\n"
+"\n"
+"%s is distributed in the hope that it will be useful,but WITHOUT ANY WARRANTY; without even the implied warranty ofMERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See theGNU General Public License for more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public Licensealong with %s.  If not, see <http://www.gnu.org/licenses/>."
+msgstr ""
+"%s est un logiciel libre ; vous pouvez le diffuser et/ou le modifier suivant les termes de la Licence Publique Générale GNU telle que publiée par la Free Software Foundation ; soit la version 3 de cette licence, soit (à votre convenance) une version ultérieure.\n"
+"\n"
+"%s est diffusé dans l'espoir qu'il sera utile, mais SANS AUCUNE GARANTIE ; sans même une garantie implicite de COMMERCIALISATION ou d'ADÉQUATION À UN USAGE PARTICULIER. Voyez la Licence Publique Générale GNU pour plus de détails.\n"
+"\n"
+"Vous devriez avoir reçu une copie de la Licence Publique Générale GNU avec %s ; sinon, veuillez écrire à la Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, États-Unis."
+
+#: ../../../DialogAbout.cpp:73
+msgid "License"
+msgstr "Licence"
+
+#: ../../../DialogConfig.hpp:68
+msgid "New Game..."
+msgstr "Nouveau jeu..."
+
+#: ../../../DialogAbout.hpp:68
+msgid "About"
+msgstr "À Propos"
+
+#: ../../../AppConfig.hpp:5
+msgid "C501 Checkers"
+msgstr "C501 Checkers"
+
+#~ msgid "bytes"
+#~ msgstr "octets"
+#~ msgid "Search"
+#~ msgstr "Recherche"
+#~ msgid "Refine"
+#~ msgstr "Affiner"
+#~ msgid "Edit"
+#~ msgstr "Éditer"
+#~ msgid "Remove"
+#~ msgstr "Supprimer"
+#~ msgid "Refresh"
+#~ msgstr "Actualiser"
+#~ msgid "Add"
+#~ msgstr "Ajouter"
+#~ msgid "Information"
+#~ msgstr "Informations"
+#~ msgid "Process : "
+#~ msgstr "Processus :"
+#~ msgid "Type"
+#~ msgstr "Type"
+#~ msgid "Size (bytes)"
+#~ msgstr "Taille (octets)"
+#~ msgid "Adress"
+#~ msgstr "Adresse"
+#~ msgid "Value"
+#~ msgstr "Valeur"
+#~ msgid "Pid : "
+#~ msgstr "Pid : "
+#~ msgid "Found : "
+#~ msgstr "Trouvé : "
+#~ msgid "Time : "
+#~ msgstr "Temps :"
+#~ msgid "Search..."
+#~ msgstr "Recherche..."
+#~ msgid "Type to search :"
+#~ msgstr "Type à rechercher :"
+#~ msgid "Value to search :"
+#~ msgstr "Valeur à rechercher :"
+#~ msgid "Searching for type %s..."
+#~ msgstr "Recherche du type %s..."
+#~ msgid "Updating results..."
+#~ msgstr "Actualisation des résultats..."
+#~ msgid "Refine..."
+#~ msgstr "Affiner..."
+#~ msgid "== General information =="
+#~ msgstr "== Informations générales =="
+#~ msgid "Name : "
+#~ msgstr "Nom : "
+#~ msgid "Owner id : "
+#~ msgstr "Id du propriétaire : "
+#~ msgid "Owner : "
+#~ msgstr "Propriétaire : "
+#~ msgid "Path : "
+#~ msgstr "Chemin : "
+#~ msgid "== Memory map =="
+#~ msgstr "== Memory map =="
+#~ msgid "Number : "
+#~ msgstr "Nombre : "
+#~ msgid "Size : "
+#~ msgstr "Taille : "
+#~ msgid "Zone="
+#~ msgstr "Zone="
+#~ msgid "Pathname="
+#~ msgstr "Pathname="
+#~ msgid "About process"
+#~ msgstr "À propos du processus"
+#~ msgid "Edit..."
+#~ msgstr "Édition..."
+#~ msgid "New value :"
+#~ msgstr "Nouvelle valeur :"
+#~ msgid "Type \"%s\" can't handle this value !"
+#~ msgstr "Le type \"%s\" ne peut pas supporter cette valeur !"
+#~ msgid "Please wait..."
+#~ msgstr "Veuillez patienter..."
+

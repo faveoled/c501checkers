@@ -1,0 +1,16 @@
+#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Version=1.0
+Encoding=UTF-8
+Exec=c501checkers
+Icon=c501checkers-icon.png
+Terminal=false
+X-MultipleArgs=false
+Type=Application
+Categories=Application;Game;
+StartupNotify=true
+Name=C501 Checkers
+Name[fr_FR]=Jeu de dames C501
+Comment=A checkers game.
+Comment[fr_FR]=Un jeu de dames.
