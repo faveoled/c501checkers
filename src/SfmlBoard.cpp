@@ -29,16 +29,16 @@ using namespace std;
 //------------------------------------------------------------------------------
 SfmlBoard::SfmlBoard(wxWindow* Parent, wxWindowID Id, Board &board, strGameSettings &settings, const wxPoint& Position, const wxSize& Size, long Style) : wxSFMLCanvas(Parent, Id, Position, Size, Style), m_board(board), m_settings(settings), m_mvtStatus(1), m_mvtFrameCount(0), m_dragAndDropOrigin(-1, -1), m_hightlightPos(-1, -1), m_winner(WINNER_NO)
 {
-    // Preparation des images...
-    m_bmp_W.LoadFromFile(StrWxToStd(findFile(_T("data/wq.png"))));
-    m_bmp_w.LoadFromFile(StrWxToStd(findFile(_T("data/w.png"))));
-    m_bmp_B.LoadFromFile(StrWxToStd(findFile(_T("data/bq.png"))));
-    m_bmp_b.LoadFromFile(StrWxToStd(findFile(_T("data/b.png"))));
-    m_bmp_blackCase.LoadFromFile(StrWxToStd(findFile(_T("data/black.png"))));
-    m_bmp_back.LoadFromFile(StrWxToStd(findFile(_T("data/back.jpg"))));
+    // Preparation of images...
+    m_bmp_W.loadFromFile(StrWxToStd(findFile(_T("data/wq.png"))));
+    m_bmp_w.loadFromFile(StrWxToStd(findFile(_T("data/w.png"))));
+    m_bmp_B.loadFromFile(StrWxToStd(findFile(_T("data/bq.png"))));
+    m_bmp_b.loadFromFile(StrWxToStd(findFile(_T("data/b.png"))));
+    m_bmp_blackCase.loadFromFile(StrWxToStd(findFile(_T("data/black.png"))));
+    m_bmp_back.loadFromFile(StrWxToStd(findFile(_T("data/back.jpg"))));
 
 
-    // Defaut
+    // Default
     m_settings = GetInternationalRules();
     m_board.SetRules(m_settings.rules);
     m_board.InitGame(m_settings.whitesStart, m_settings.hSize, m_settings.vSize, m_settings.pieceNb);
@@ -105,7 +105,7 @@ void SfmlBoard::OnMouse(wxMouseEvent &event)
     }
     else if(event.GetEventType() == wxEVT_LEFT_UP && m_board.IsCaseInGameRelative(IsWhitesOnTop(), m_dragAndDropOrigin))
     {
-        // Récupération de la case cible
+        // Retrieve the target cell
         Position destPos = GetCasePos(event.GetPosition());
 
         if(m_board.GetTurn() != IsWhitesOnTop())
@@ -114,22 +114,22 @@ void SfmlBoard::OnMouse(wxMouseEvent &event)
             m_dragAndDropOrigin = m_board.ExchangeRelativePos(m_dragAndDropOrigin);
         }
 
-        // Tentative de créer le mouvement
+        // Attempt to create the movement
         Mvt mvt;
         try
         {
             mvt = Mvt(m_dragAndDropOrigin, destPos);
         }
-        catch(MyException &e) // Mouvement non diagonal
+        catch(MyException &e) // Movement non diagonal
         {
             m_dragAndDropOrigin = Position(-1,-1);
             return;
         }
 
-        // Mouvement possible ?
-        // => Il faut prendre tous les mouvements, au cas où on puisse prendre...
+        // Movement possible ?
+        // => We must take all the movements, in case we can take...
         bool mvtOk = false;
-        vector<pair<Position, vector<Mvt> > > tbl = m_board.GetAllPlayerPoosibilities(m_board.GetTurn());
+        vector<pair<Position, vector<Mvt> > > tbl = m_board.GetAllPlayerPossibilities(m_board.GetTurn());
 
         for(size_t posId = 0; posId < tbl.size(); posId++)
         {
@@ -145,7 +145,7 @@ void SfmlBoard::OnMouse(wxMouseEvent &event)
                     }
                 }
 
-                break; // Quoiqu'il arrive, on peut arréter
+                break; // Whatever happens, we can stop
             }
         }
 
@@ -175,25 +175,32 @@ void SfmlBoard::DrawWinnerInfo()
 {
     if(m_winner != WINNER_NO)
     {
-        sf::String msg;
+        sf::Text msg;
         if(m_winner == WINNER_WHITE)
         {
-            msg.SetText(StrWxToSfUtf8(_("Whites won !")));
+            msg.setString(StrWxToSfUtf8(_("Whites won !")));
         }
         else
         {
-            msg.SetText(StrWxToSfUtf8(_("Blacks won !")));
+            msg.setString(StrWxToSfUtf8(_("Blacks won !")));
         }
 
-        msg.SetColor(sf::Color(0, 0, 255));
 
-        sf::FloatRect strRect = msg.GetRect();
-        msg.SetPosition(GetSize().GetWidth() / 2 - strRect.GetWidth() / 2, GetSize().GetHeight() / 2 - strRect.GetHeight() / 2);
+        msg.setColor(sf::Color(0, 0, 255));
+
+        sf::FloatRect strRect = msg.getLocalBounds();
+        msg.setPosition(GetSize().GetWidth() / 2 - strRect.width / 2, GetSize().GetHeight() / 2 - strRect.height / 2);
 
 
-        Draw(sf::Shape::Rectangle(msg.GetRect().Left - 15, msg.GetRect().Top - 15, msg.GetRect().Right + 15, msg.GetRect().Bottom + 25, sf::Color(0, 0, 0), 4, sf::Color(0, 0, 255)));
+        sf::FloatRect textRect = msg.getGlobalBounds(); // get the text bounds
+        sf::RectangleShape rect;
+        rect.setSize(sf::Vector2f(textRect.width + 30, textRect.height + 40)); // set the size of the rectangle with some padding
+        rect.setPosition(sf::Vector2f(textRect.left - 15, textRect.top - 15)); // set the position of the rectangle to match the text
+        rect.setFillColor(sf::Color(0, 0, 0)); // set the fill color of the rectangle
+        rect.setOutlineColor(sf::Color(0, 0, 255)); // set the outline color of the rectangle
+        rect.setOutlineThickness(4); // set the outline thickness of the rectangle
 
-        Draw(msg);
+        draw(rect); // draw the rectangle shape
     }
 }
 
@@ -212,51 +219,56 @@ bool SfmlBoard::IsMoving() const
 {
     return (m_mvtStatus < 1);
 }
+
+
+
 //------------------------------------------------------------------------------
 void SfmlBoard::OnUpdate()
 {
+    sf::Clock clock;
+
     bool mvtEnd = false;
 
-    wxTopLevelWindow *frame = static_cast<wxTopLevelWindow*>(GetParent()->GetParent()->GetParent());
+    wxTopLevelWindow *frame = dynamic_cast<wxTopLevelWindow*>(GetParent()->GetParent()->GetParent());
 
-    if(IsMoving() && !IsPaused() && m_winner == WINNER_NO && frame->IsActive()) // Il y a un mouvement
+    if(IsMoving() && !IsPaused() && m_winner == WINNER_NO && frame->IsActive()) // There is a movement
     {
-        if(m_mvtFrameCount <= 2) // On passe quelques frames parce que le frame time est très grand.
+        if(m_mvtFrameCount <= 2) // We skip a few frames because the frame time is very large.
         {
             m_mvtFrameCount++;
         }
         else
         {
-            m_mvtStatus += GetFrameTime() * 8 / float(m_relativePosMvt.second.GetDistance());
+            m_mvtStatus += clock.restart().asMilliseconds() * 8 / float(m_relativePosMvt.second.GetDistance());
         }
 
-        if(!IsMoving()) // Mouvement terminé...
+        if(!IsMoving()) // Movement finished...
         {
-            // ==> On l'applique
+            // ==> We apply it
             m_board.MovePiece(m_board.GetTurn(), m_posMvt.first, m_posMvt.second);
             mvtEnd = true;
         }
     }
 
     // Stats
-        // Status Bar
+    // Status Bar
     wxStatusBar *statusBar = static_cast<wxFrame*>(frame)->GetStatusBar();
 
     statusBar->SetStatusText(_("Whites: ") + wxNbToStr(m_board.GetAllPlayerDamesCount(WHITES)), 0);
     statusBar->SetStatusText(_("Blacks: ") + wxNbToStr(m_board.GetAllPlayerDamesCount(BLACKS)), 1);
 
-    // On affiche
+    // Display
     DrawBoard();
     DrowDames();
     DrawWinnerInfo();
 
-    // Si l'autre joueur est un bot, on joue pour lui.
+    // If the other player is a bot, we play for him.
     if(m_winner == WINNER_NO)
     {
         if(!IsMoving() && ((m_board.GetTurn() == WHITES && !m_settings.isWhitesHuman) || (m_board.GetTurn() == BLACKS && !m_settings.isBlacksHuman)))
         {
-            // On affiche le buffer.
-            Display();
+            // We display the buffer.
+            display();
 
             // On calcule
             int level = m_board.GetTurn() == WHITES ? m_settings.whitesLevel : m_settings.blacksLevel;
@@ -283,9 +295,9 @@ void SfmlBoard::OnUpdate()
                 SetWinner(!m_board.GetTurn());
             }
         }
-        else if (mvtEnd) // Si non, si le mvt est fini et qu'on est humain, on verifie que l'humain n'a pas perdu
+        else if (mvtEnd) // If not, if the mvt is finished and we are human, we check that the human has not lost
         {
-            vector<pair<Position, vector<Mvt> > > possiblilities = m_board.GetAllPlayerPoosibilities(m_board.GetTurn());
+            vector<pair<Position, vector<Mvt> > > possiblilities = m_board.GetAllPlayerPossibilities(m_board.GetTurn());
             if(possiblilities.empty())
             {
                 SetWinner(!m_board.GetTurn());
@@ -329,13 +341,13 @@ void SfmlBoard::OnResize(wxSizeEvent &event)
 //------------------------------------------------------------------------------
 void SfmlBoard::MovePieceAnim(const Position &pos, const Mvt &mvt)
 {
-    if(IsMoving()) // Un mouvement non terminé...
+    if(IsMoving()) // An unfinished move...
     {
-        // ==> On l'applique
+        // ==> We apply it
         m_board.MovePiece(m_board.GetTurn(), m_posMvt.first, m_posMvt.second);
     }
 
-    // On commence un autre mouvement.
+    // We start another movement.
     m_mvtStatus = 0;
     m_mvtFrameCount = 0;
     m_posMvt.first = pos;
@@ -343,7 +355,7 @@ void SfmlBoard::MovePieceAnim(const Position &pos, const Mvt &mvt)
 
     m_relativePosMvt = m_posMvt;
 
-    if(m_board.GetTurn() != IsWhitesOnTop()) // S'il faut échanger
+    if(m_board.GetTurn() != IsWhitesOnTop()) // Whether to swap
     {
         m_relativePosMvt.first = m_board.ExchangeRelativePos(m_relativePosMvt.first);
         m_relativePosMvt.second = m_relativePosMvt.second.GetReverse();
@@ -389,41 +401,48 @@ void SfmlBoard::DrowDames()
                         }
                     }
 
-                    // Sprite
-                    sf::Sprite sprite(*bmp);
+                    sf::Texture bmpTexture;
+                    bmpTexture.loadFromImage(*bmp);
 
-                    // La position
+                    // Sprite
+                    sf::Sprite sprite(bmpTexture);
+
+                    // The position
                     sf::Rect<float> drawPos;
                     drawPos = GetDameImgRect(Position(x, y));
 
-                    if(IsMoving()) // Il y a un mouvement
+                    if(IsMoving()) // There is a movement
                     {
-                        if(m_relativePosMvt.first == Position(x,y)) // Le pion courrant doit bouger...
+                        if(m_relativePosMvt.first == Position(x,y)) // The current pawn must move...
                         {
                             drawPos = GetDameImgRect(Position(x, y), m_relativePosMvt.second, m_mvtStatus);
                         }
                         else if(m_relativePosMvt.second.IsEat() && m_relativePosMvt.second.GetEatPos() == Position(x,y))
                         {
-                            sprite.SetColor(sf::Color(255, 255, 255, (1.f - m_mvtStatus) * 255.f));
+                            sprite.setColor(sf::Color(255, 255, 255, (1.f - m_mvtStatus) * 255.f));
                         }
                     }
 
                     if(m_dragAndDropOrigin == Position(x,y))
                     {
-                        float height = drawPos.GetHeight();
-                        float width = drawPos.GetWidth();
+                        float height = drawPos.height;
+                        float width = drawPos.width;
 
-                        drawPos.Left = m_currentDndPos.x - width / 2;
-                        drawPos.Top = m_currentDndPos.y - height / 2;
-                        drawPos.Right = drawPos.Left + width;
-                        drawPos.Bottom = drawPos.Top + height;
+                        drawPos.left = m_currentDndPos.x - width / 2;
+                        drawPos.top = m_currentDndPos.y - height / 2;
+                        // TODO Fix
+//                        drawPos.right = drawPos.left + width;
+//                        drawPos.bottom = drawPos.top + height;
                     }
 
 
-                    // On dessine l'image
-                    sprite.SetPosition(drawPos.Left, drawPos.Top);
-                    sprite.Resize(drawPos.GetWidth(), drawPos.GetHeight());
-                    Draw(sprite);
+                    // We draw the image
+                    sprite.setPosition(drawPos.left, drawPos.top);
+                    sprite.setScale(
+                            drawPos.width / sprite.getLocalBounds().width,
+                            drawPos.height / sprite.getLocalBounds().height
+                    );
+                    draw(sprite);
                 }
             }
         }
@@ -434,14 +453,24 @@ void SfmlBoard::DrawBoard()
 {
     //Clear(sf::Color(255, 255, 255));
 
+    sf::Texture backTexture;
+    backTexture.loadFromImage(m_bmp_back);
+
     // Fond
-    sf::Sprite back(m_bmp_back);
-    back.SetPosition(0, 0);
-    back.Resize(GetWidth(), GetHeight());
-    Draw(back);
+    sf::Sprite back(backTexture);
+    back.setPosition(0, 0);
+
+    back.setScale(
+            GetSize().GetWidth() / back.getLocalBounds().width,
+            GetSize().GetHeight() / back.getLocalBounds().height
+    );
+    draw(back);
+
+    sf::Texture blackCaseTexture;
+    blackCaseTexture.loadFromImage(m_bmp_blackCase);
 
     // Cases
-    sf::Sprite blackCase(m_bmp_blackCase);
+    sf::Sprite blackCase(blackCaseTexture);
 
     for(size_t x = 0; x < m_board.GetBoardHSize(); x++)
     {
@@ -460,10 +489,13 @@ void SfmlBoard::DrawBoard()
                 {
                     caseColor = sf::Color(255, 255, 255);
                 }
-                blackCase.SetColor(caseColor);
-                blackCase.Resize(caseRect.GetWidth(), caseRect.GetHeight());
-                blackCase.SetPosition(caseRect.Left, caseRect.Top);
-                Draw(blackCase);
+                blackCase.setColor(caseColor);
+                blackCase.setScale(
+                        caseRect.width / blackCase.getLocalBounds().width,
+                        caseRect.height / blackCase.getLocalBounds().height
+                );
+                blackCase.setPosition(caseRect.left, caseRect.top);
+                draw(blackCase);
 
             }
         }
@@ -472,31 +504,35 @@ void SfmlBoard::DrawBoard()
 //------------------------------------------------------------------------------
 sf::Rect<float> SfmlBoard::GetDameImgRect(const Position &pos, const Mvt &mvt, const float &mvtStatus) const
 {
-    const float caseWidth = float(GetWidth()) / float(m_board.GetBoardHSize());
-    const float caseHeight = float(GetHeight()) / float(m_board.GetBoardVSize());
+    const float caseWidth = float(GetSize().GetWidth()) / float(m_board.GetBoardHSize());
+    const float caseHeight = float(GetSize().GetHeight()) / float(m_board.GetBoardVSize());
 
-    // La position
-    sf::Rect<float> drawPos(pos.x * caseWidth, pos.y * caseHeight, (pos.x + 1) * caseWidth, (pos.y + 1)* caseHeight);
+    // The position
+    sf::Rect<float> drawPos(pos.x * caseWidth, pos.y * caseHeight, caseWidth, caseHeight);
 
-    // Cas d'un mouvement
+    // Case of a movement
     if(mvtStatus != 1 && mvtStatus != 0)
     {
-        if(mvt.IsRight()) // Vers la droite
+        if(mvt.IsRight()) // To the right
         {
-            drawPos.Offset(caseWidth * float(mvt.GetDistance()) * mvtStatus, 0);
+            drawPos.left = caseWidth * float(mvt.GetDistance()) * mvtStatus;
+            drawPos.top = 0;
         }
         else
         {
-            drawPos.Offset(caseWidth * float(mvt.GetDistance()) * mvtStatus * (-1.f), 0);
+            drawPos.left = caseWidth * float(mvt.GetDistance()) * mvtStatus * (-1.f);
+            drawPos.top = 0;
         }
 
-        if(mvt.IsTop()) // Vers le haut
+        if(mvt.IsTop()) // To the left
         {
-            drawPos.Offset(0, caseHeight * float(mvt.GetDistance()) * mvtStatus);
+            drawPos.left = 0;
+            drawPos.top = caseHeight * float(mvt.GetDistance()) * mvtStatus;
         }
         else
         {
-            drawPos.Offset(0, caseHeight * float(mvt.GetDistance()) * mvtStatus * (-1.f));
+            drawPos.left = 0;
+            drawPos.top = caseHeight * float(mvt.GetDistance()) * mvtStatus * (-1.f);
         }
     }
 

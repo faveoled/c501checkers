@@ -45,7 +45,7 @@ std::string StrWxToStd(const wxString &str);
 wxString StrStdToWx(const std::string &str);
 wxString wxStrAutoCut(wxString str, const int &maxLen = 60);
 
-sf::Unicode::UTF8String StrWxToSfUtf8(const wxString &str);
+sf::String StrWxToSfUtf8(const wxString &str);
 
 // Filename (Pour Windows)
 std::string filenameWxToStd(const wxString &str);

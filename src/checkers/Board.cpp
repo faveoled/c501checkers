@@ -96,7 +96,7 @@ std::pair<Position, Mvt> Board::GetIaMvt(const int &level)
 
     bool isSelected = false;
 
-    vector<pair<Position, vector<Mvt> > > possiblilities = GetAllPlayerPoosibilities(GetTurn());
+    vector<pair<Position, vector<Mvt> > > possiblilities = GetAllPlayerPossibilities(GetTurn());
 
     for(size_t pieceId = 0; pieceId < possiblilities.size(); pieceId++)
     {
@@ -128,10 +128,10 @@ std::pair<Position, Mvt> Board::GetIaMvt(const int &level)
 //------------------------------------------------------------------------------
 Position Board::ExchangeRelativePos(Position pos) const
 {
-    // La gauche et la droite s'inversent...
+    // Left and right are reversed...
     pos.x = GetBoardHSize() - 1 - pos.x;
 
-    // Le bas et le haut s'inversent...
+    // The bottom and the top are reversed...
     pos.y = GetBoardVSize() - 1 - pos.y;
 
     return pos;
@@ -273,7 +273,7 @@ float Board::IaProceed(const int &level, const bool &color, const Position &pos,
         float tmpScore = 0; // Pour le diviser par le totale...
         int total = 0;
 
-        vector<pair<Position, vector<Mvt> > > possiblilities = tmpBoard.GetAllPlayerPoosibilities(tmpBoard.GetTurn());
+        vector<pair<Position, vector<Mvt> > > possiblilities = tmpBoard.GetAllPlayerPossibilities(tmpBoard.GetTurn());
         for(size_t pieceId = 0; pieceId < possiblilities.size(); pieceId++)
         {
             const Position &currentPos = possiblilities[pieceId].first;
@@ -578,7 +578,7 @@ void Board::SwapCases(dameCase &c1, dameCase &c2)
     c2 = tmp;
 }
 //------------------------------------------------------------------------------
-vector<pair<Position, vector<Mvt> > > Board::GetAllPlayerPoosibilities(const bool &isWhite)
+vector<pair<Position, vector<Mvt> > > Board::GetAllPlayerPossibilities(const bool &isWhite)
 {
     vector<pair<Position, vector<Mvt> > > tbl;
     std::vector<Position> dameList = GetAllPlayerDames(isWhite);
@@ -806,14 +806,14 @@ Mvt Board::MovePiece(const bool &isWhite, const Position &pos, Mvt mvt, const bo
         return mvt;
     }
 
-    // Est ce qu'une piéce en particulier doit jouer ?
+    // Is a piece in particular to play?
     if(IsCaseInGame(m_posContinue))
     {
-        if(GetRealPos(isWhite, pos) != m_posContinue) // Pas la bonne piece
+        if(GetRealPos(isWhite, pos) != m_posContinue) // Not the right part
         {
             return mvt;
         }
-        else if(m_lastMvt.GetReverse().GetDirection() == mvt.GetDirection() /* Pas le droit de revenir en arriére... */ ) // Bonne piece mais mauvaise direction
+        else if(m_lastMvt.GetReverse().GetDirection() == mvt.GetDirection() /* No right to go back... */ ) // Good piece but bad direction
         {
             return mvt;
         }

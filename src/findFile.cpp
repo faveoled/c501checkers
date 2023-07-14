@@ -35,16 +35,15 @@ wxString findFile(const wxString &str)
     {
         return testPath;
     }
-
     #if defined(__UNIX__)
-    testPath = wxString(wxStandardPaths().GetInstallPrefix() + _T("/share/") + _T(PACKAGE) + _T("/") + str);
+    testPath = wxString(wxStandardPaths::Get().GetInstallPrefix() + _T("/share/") + _T(PACKAGE) + _T("/") + str);
     if(wxFileExists(testPath) || wxDirExists(testPath)) // Si c'est dans le dossier /usr/.../share/nomprog
     {
         return testPath;
     }
     #endif // defined(__UNIX__)
 
-    testPath = wxString(wxStandardPaths().GetDataDir() + _T("/") + str);
+    testPath = wxString(wxStandardPaths::Get().GetDataDir() + _T("/") + str);
     if(wxFileExists(testPath) || wxDirExists(testPath)) // Si c'est dans le dossier /usr/.../share/nomPaquet
     {
         return testPath;

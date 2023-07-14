@@ -26,9 +26,12 @@ std::string StrWxToStd(const wxString &str)
 	return std::string(str.mb_str(wxConvUTF8));
 }
 //------------------------------------------------------------------------------
-sf::Unicode::UTF8String StrWxToSfUtf8(const wxString &str)
+sf::String StrWxToSfUtf8(const wxString &str)
 {
-	return sf::Unicode::UTF8String(static_cast<const unsigned char*>(static_cast<const void*>(StrWxToStd(str).c_str())));
+    wxScopedCharBuffer utf8buf = str.ToUTF8();
+    const char* utf8ptr = utf8buf.data();
+    sf::String sfstr(utf8ptr);
+    return sfstr;
 }
 //------------------------------------------------------------------------------
 wxString StrStdToWx(const std::string &str)

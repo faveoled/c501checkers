@@ -55,7 +55,7 @@ public:
     Mvt MovePiece(const bool &isWhite, const Position &pos, Mvt mvt, const bool &act = true);
 
     std::vector<Mvt> GetMvtPossibilitiesRelative(const bool &isWhite, Position pos);
-    std::vector<std::pair<Position, std::vector<Mvt> > > GetAllPlayerPoosibilities(const bool &isWhite);
+    std::vector<std::pair<Position, std::vector<Mvt> > > GetAllPlayerPossibilities(const bool &isWhite);
 
     Position ExchangeRelativePos(Position pos) const;
 
